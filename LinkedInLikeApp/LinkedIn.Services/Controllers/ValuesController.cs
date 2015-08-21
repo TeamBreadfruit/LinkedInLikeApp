@@ -4,16 +4,19 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using LinkedIn.Data;
+using LinkedIn.Models;
 
 namespace LinkedIn.Services.Controllers
 {
-    [Authorize]
     public class ValuesController : ApiController
     {
+        LinkedInContext db = new LinkedInContext();
+
         // GET api/values
-        public IEnumerable<string> Get()
+        public IHttpActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(db.Degrees.Count());
         }
 
         // GET api/values/5
