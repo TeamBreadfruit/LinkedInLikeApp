@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using LinkedIn.Data;
-using LinkedIn.Models;
-
-namespace LinkedIn.Services.Controllers
+﻿namespace LinkedIn.Services.Controllers
 {
-    public class ValuesController : ApiController
-    {
-        LinkedInContext db = new LinkedInContext();
+    using System.Linq;
+    using System.Web.Http;
 
+    public class ValuesController : BaseApiController
+    {
         // GET api/values
         public IHttpActionResult Get()
         {
-            return Ok(db.Degrees.Count());
+            return this.Ok(this.Data.Degrees.All().Count());
         }
 
         // GET api/values/5
