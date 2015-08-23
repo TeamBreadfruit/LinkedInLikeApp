@@ -43,6 +43,16 @@ namespace LinkedIn.Data
                   m.ToTable("UserConnections");
               });
 
+            modelBuilder.Entity<ConnectionRequest>()
+                .HasRequired<ApplicationUser>(r => r.FromUser)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ConnectionRequest>()
+                .HasRequired<ApplicationUser>(r => r.ToUser)
+                .WithMany(u => u.ConnectionRequests)
+                .WillCascadeOnDelete(false);
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="ApplicationUser.cs" />
     <Compile Include="Company.cs" />
+    <Compile Include="ConnectionRequest.cs" />
+    <Compile Include="ConnectionRequestStatus.cs" />
     <Compile Include="Degree.cs" />
     <Compile Include="Education.cs" />
     <Compile Include="Group.cs" />

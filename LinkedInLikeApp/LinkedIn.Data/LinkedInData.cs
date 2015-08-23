@@ -40,6 +40,11 @@
             get { return this.GetRepository<Company>(); }
         }
 
+        public IRepository<ConnectionRequest> ConnectionRequests
+        {
+            get { return this.GetRepository<ConnectionRequest>(); }
+        }
+
         public IRepository<Degree> Degrees
         {
             get { return this.GetRepository<Degree>(); }

@@ -17,6 +17,8 @@
         private ICollection<ApplicationUser> connections;
         private ICollection<Company> companies;
 
+        private ICollection<ConnectionRequest> connectionRequests;
+
         public ApplicationUser()
         {
             this.jobs = new HashSet<Job>();
@@ -26,6 +28,7 @@
             this.messages = new HashSet<Message>();
             this.connections = new HashSet<ApplicationUser>();
             this.companies = new HashSet<Company>();
+            this.connectionRequests = new HashSet<ConnectionRequest>();
         }
 
         public virtual ICollection<Job> Jobs
@@ -68,6 +71,12 @@
         {
             get { return this.companies; } 
             set { this.companies = value; }
+        }
+
+        public virtual ICollection<ConnectionRequest> ConnectionRequests
+        {
+            get { return this.connectionRequests; }
+            set { this.connectionRequests = value; }
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
