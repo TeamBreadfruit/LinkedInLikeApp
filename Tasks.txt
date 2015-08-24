@@ -1,0 +1,16 @@
+1. UsersController; - Anatoli
+2. CompaniesController; - Filip
+3. ConnectionRequestsController; - Anatoli
+4. EducationsController; - Veronika
+5. GroupsController; - Veronika
+6. JobsController; - Ivelin
+7. MessagesController; - Ivelin
+8. SkillsController - Ivan
+
+get
+api/users/{id}/companies
+api/companies
+
+get
+api/users/{id}/jobs
+api/jobs
