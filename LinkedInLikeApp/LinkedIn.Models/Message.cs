@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Message
     {
@@ -19,11 +20,17 @@
 
         public DateTime SendOn { get; set; }
 
-        public string UserId { get; set; }
+        [ForeignKey("FromUser")]
+        public string FromUserId { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser FromUser { get; set; }
 
-        public Guid GroupId { get; set; }
+        [ForeignKey("ToUser")]
+        public string ToUserId { get; set; }
+
+        public virtual ApplicationUser ToUser { get; set; }
+
+        public Guid? GroupId { get; set; }
 
         public virtual Group Group { get; set; }
     }

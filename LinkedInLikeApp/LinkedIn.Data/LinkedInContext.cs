@@ -53,6 +53,16 @@ namespace LinkedIn.Data
                 .WithMany(u => u.ConnectionRequests)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Message>()
+                .HasRequired<ApplicationUser>(r => r.FromUser)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Message>()
+                .HasOptional<ApplicationUser>(r => r.ToUser)
+                .WithMany(u => u.Messages)
+                .WillCascadeOnDelete(false);
+
             base.OnModelCreating(modelBuilder);
         }
     }

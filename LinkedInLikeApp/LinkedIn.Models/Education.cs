@@ -25,6 +25,8 @@
 
         public DateTime EndDate { get; set; }
 
+        public Guid DegreeId { get; set; }
+
         public virtual Degree Degree { get; set; }
 
         public double Grade { get; set; }
