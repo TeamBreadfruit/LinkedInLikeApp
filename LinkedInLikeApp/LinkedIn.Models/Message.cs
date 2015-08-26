@@ -14,8 +14,11 @@
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
         public string Title { get; set; }
 
+        [Required]
+        [MinLength(3)]
         public string Content { get; set; }
 
         public DateTime SendOn { get; set; }

@@ -17,10 +17,12 @@
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public string Location { get; set; }
 
+        [Required]
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
@@ -29,6 +31,7 @@
 
         public virtual Degree Degree { get; set; }
 
+        [Required]
         public double Grade { get; set; }
 
         public virtual ICollection<ApplicationUser> Users
