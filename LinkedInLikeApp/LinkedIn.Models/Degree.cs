@@ -6,12 +6,10 @@
 
     public class Degree
     {
-        private ICollection<ApplicationUser> users;
-
+        
         public Degree()
         {
-            this.Id = Guid.NewGuid();
-            this.users = new HashSet<ApplicationUser>();
+            this.Id = Guid.NewGuid();        
         }
 
         [Key]
@@ -20,11 +18,6 @@
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        public virtual ICollection<ApplicationUser> UserEducations
-        {
-            get { return this.users; } 
-            set { this.users = value; }
-        }
+      
     }
 }
