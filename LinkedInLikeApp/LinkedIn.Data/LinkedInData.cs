@@ -7,6 +7,7 @@
     using LinkedIn.Data.Contracts;
     using LinkedIn.Models;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System.Threading.Tasks;
 
     public class LinkedInData : ILinkedInData
     {
@@ -94,6 +95,11 @@
             }
 
             return (IRepository<T>)this.repositories[typeof(T)];
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            return this.context.SaveChangesAsync();
         }
     }
 }

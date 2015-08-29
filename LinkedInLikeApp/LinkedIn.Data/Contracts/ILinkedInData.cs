@@ -3,6 +3,7 @@
     using LinkedIn.Models;
 
     using Microsoft.AspNet.Identity.EntityFramework;
+    using System.Threading.Tasks;
 
     public interface ILinkedInData
     {
@@ -27,5 +28,7 @@
         IRepository<UserSession> UserSessions { get; }
 
         int SaveChanges();
+
+        Task<int> SaveChangesAsync();
     }
 }
