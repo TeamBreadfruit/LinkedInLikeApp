@@ -1,6 +1,8 @@
 namespace LinkedIn.Data
 {
     using System.Data.Entity;
+
+    using LinkedIn.Data.Migrations;
     using LinkedIn.Models;
     using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -9,7 +11,7 @@ namespace LinkedIn.Data
         public LinkedInContext()
             : base("name=LinkedInContext")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<LinkedInContext, Migrations.Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<LinkedInContext, Configuration>());
         }
         
         public virtual DbSet<Company> Companies { get; set; }
@@ -25,6 +27,8 @@ namespace LinkedIn.Data
         public virtual DbSet<Message> Messages { get; set; }
 
         public virtual DbSet<Skill> Skills { get; set; }
+
+        public virtual DbSet<UserSession> UserSessions { get; set; }
 
         public static LinkedInContext Create()
         {

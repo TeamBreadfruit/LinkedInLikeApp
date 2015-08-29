@@ -75,6 +75,11 @@
             get { return this.GetRepository<Skill>(); }
         }
 
+        public IRepository<UserSession> UserSessions
+        {
+            get { return this.GetRepository<UserSession>(); }
+        }
+
         public int SaveChanges()
         {
             return this.context.SaveChanges();

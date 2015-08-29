@@ -13,6 +13,9 @@ using LinkedIn.Services.Models;
 
 namespace LinkedIn.Services.Providers
 {
+    using LinkedIn.Data;
+    using LinkedIn.Models;
+
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
@@ -29,7 +32,8 @@ namespace LinkedIn.Services.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            var userManager = new ApplicationUserManager(
+                new UserStore<ApplicationUser>(new LinkedInContext()));
 
             ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
 
@@ -43,6 +47,11 @@ namespace LinkedIn.Services.Providers
                OAuthDefaults.AuthenticationType);
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
+
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            cookiesIdentity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+            cookiesIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
             AuthenticationProperties properties = CreateProperties(user.UserName);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);

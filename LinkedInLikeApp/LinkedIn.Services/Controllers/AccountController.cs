@@ -19,33 +19,27 @@ using LinkedIn.Services.Results;
 
 namespace LinkedIn.Services.Controllers
 {
+    using LinkedIn.Data;
+    using LinkedIn.Models;
+
     [Authorize]
     [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
+    public class AccountController : BaseApiController
     {
         private const string LocalLoginProvider = "Local";
-        private ApplicationUserManager _userManager;
+        private ApplicationUserManager userManager;
 
         public AccountController()
         {
-        }
-
-        public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
-        {
-            UserManager = userManager;
-            AccessTokenFormat = accessTokenFormat;
+            this.userManager = new ApplicationUserManager(
+                new UserStore<ApplicationUser>(new LinkedInContext()));
         }
 
         public ApplicationUserManager UserManager
         {
             get
             {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
+                return this.userManager;
             }
         }
 
@@ -328,7 +322,7 @@ namespace LinkedIn.Services.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Username, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Username, Email = model.Email, Name = model.Name};
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -375,10 +369,10 @@ namespace LinkedIn.Services.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && _userManager != null)
+            if (disposing && userManager != null)
             {
-                _userManager.Dispose();
-                _userManager = null;
+                userManager.Dispose();
+                userManager = null;
             }
 
             base.Dispose(disposing);

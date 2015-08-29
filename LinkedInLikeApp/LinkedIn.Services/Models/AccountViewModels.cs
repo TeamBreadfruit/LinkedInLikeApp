@@ -40,4 +40,11 @@ namespace LinkedIn.Services.Models
 
         public string ProviderKey { get; set; }
     }
+
+    public class UserRegisterViewModel
+    {
+        public string Username { get; set; }
+
+        public string Email { get; set; }
+    }
 }

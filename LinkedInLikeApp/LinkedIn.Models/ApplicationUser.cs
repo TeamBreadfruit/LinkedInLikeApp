@@ -1,6 +1,7 @@
 ﻿namespace LinkedIn.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -30,6 +31,13 @@
             this.companies = new HashSet<Company>();
             this.connectionRequests = new HashSet<ConnectionRequest>();
         }
+
+        [Required]
+        public string Name { get; set; }
+
+        public string Address { get; set; }
+
+        public string Website { get; set; }
 
         public virtual ICollection<Job> Jobs
         {

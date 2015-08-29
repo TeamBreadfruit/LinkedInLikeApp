@@ -24,6 +24,8 @@
 
         IRepository<Skill> Skills { get; }
 
+        IRepository<UserSession> UserSessions { get; }
+
         int SaveChanges();
     }
 }
