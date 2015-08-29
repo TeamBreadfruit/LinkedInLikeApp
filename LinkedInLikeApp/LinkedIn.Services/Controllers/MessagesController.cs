@@ -36,18 +36,7 @@ namespace LinkedIn.Services.Controllers
 
             currentPage = currentPage < 0 ? 0 : currentPage;
 
-            var messages = await this.Data.Messages.All().Where(m => m.FromUserId == userId).OrderBy(m => m.SendOn).Select(m => new MessageViewModel() { 
-                Id = m.Id,
-                Title = m.Title,
-                Content = m.Content,
-                SendOn = m.SendOn,
-                FromUserId = m.FromUserId,
-                FromUserName = m.FromUser.UserName,
-                ToUserId = m.ToUserId,
-                ToUserName = m.ToUser != null ? m.ToUser.UserName : null,
-                ToGroupId = m.GroupId,
-                ToGroupName = m.Group != null ? m.Group.Name : null
-            })
+            var messages = await this.Data.Messages.All().Where(m => m.FromUserId == userId).OrderBy(m => m.SendOn).Select(MessageViewModel.DataModel)
                 .Skip(currentPage * PAGE_SIZE)
                 .Take(PAGE_SIZE)
                 .ToListAsync();
@@ -68,19 +57,7 @@ namespace LinkedIn.Services.Controllers
 
             currentPage = currentPage < 0 ? 0 : currentPage;
 
-            var messages = await this.Data.Messages.All().Where(m => m.ToUserId == userId).OrderBy(m => m.SendOn).Select(m => new MessageViewModel()
-            {
-                Id = m.Id,
-                Title = m.Title,
-                Content = m.Content,
-                SendOn = m.SendOn,
-                FromUserId = m.FromUserId,
-                FromUserName = m.FromUser.UserName,
-                ToUserId = m.ToUserId,
-                ToUserName = m.ToUser != null ? m.ToUser.UserName : null,
-                ToGroupId = m.GroupId,
-                ToGroupName = m.Group != null ? m.Group.Name : null
-            })
+            var messages = await this.Data.Messages.All().Where(m => m.ToUserId == userId).OrderBy(m => m.SendOn).Select(MessageViewModel.DataModel)
                 .Skip(currentPage * PAGE_SIZE)
                 .Take(PAGE_SIZE)
                 .ToListAsync();
@@ -102,19 +79,7 @@ namespace LinkedIn.Services.Controllers
 
             currentPage = currentPage < 0 ? 0 : currentPage;
 
-            var messages = await this.Data.Messages.All().Where(m => m.Group == group).OrderBy(m => m.SendOn).Select(m => new MessageViewModel()
-            {
-                Id = m.Id,
-                Title = m.Title,
-                Content = m.Content,
-                SendOn = m.SendOn,
-                FromUserId = m.FromUserId,
-                FromUserName = m.FromUser.UserName,
-                ToUserId = m.ToUserId,
-                ToUserName = m.ToUser != null ? m.ToUser.UserName : null,
-                ToGroupId = m.GroupId,
-                ToGroupName = m.Group != null ? m.Group.Name : null
-            })
+            var messages = await this.Data.Messages.All().Where(m => m.Group == group).OrderBy(m => m.SendOn).Select(MessageViewModel.DataModel)
                 .Skip(currentPage * PAGE_SIZE)
                 .Take(PAGE_SIZE)
                 .ToListAsync();
@@ -124,7 +89,7 @@ namespace LinkedIn.Services.Controllers
 
         [HttpGet]
         [Route("messages/{id}")]
-        public async Task<IHttpActionResult> GetMessage(Guid id)
+        public async Task<IHttpActionResult> GetMessage(string id)
         {
             var userId = this.User.Identity.GetUserId();
             if (userId == null)
@@ -132,25 +97,18 @@ namespace LinkedIn.Services.Controllers
                 return this.BadRequest("Invalid session token.");
             }
 
-            Message message = await this.Data.Messages.All().FirstOrDefaultAsync(m => m.Id == id && (m.GroupId != null || m.FromUserId == userId || m.ToUserId == userId));
-            if (message == null)
+            var messages = await this.Data.Messages.All().Where(m => m.Id == new Guid(id) && (m.GroupId != null || m.FromUserId == userId || m.ToUserId == userId))
+                .Select(MessageViewModel.DataModel)
+                .ToListAsync();
+
+            var resultMessage = messages.FirstOrDefault();
+            
+            if (resultMessage == null)
             {
                 return BadRequest("Message id is incorrect or you are not allowed to view this message");
             }
 
-            return Ok(new MessageViewModel()
-            {
-                Id = message.Id,
-                Title = message.Title,
-                Content = message.Content,
-                SendOn = message.SendOn,
-                FromUserId = message.FromUserId,
-                FromUserName = message.FromUser.UserName,
-                ToUserId = message.ToUserId,
-                ToUserName = message.ToUser != null ? message.ToUser.UserName : null,
-                ToGroupId = message.GroupId,
-                ToGroupName = message.Group != null ? message.Group.Name : null
-            });
+            return Ok(resultMessage);
         }
 
         [HttpPut]
