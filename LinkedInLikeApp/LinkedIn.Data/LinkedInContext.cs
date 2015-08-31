@@ -16,6 +16,8 @@ namespace LinkedIn.Data
         
         public virtual DbSet<Company> Companies { get; set; }
 
+        public virtual DbSet<ConnectionRequest> ConnectionRequests { get; set; }
+
         public virtual DbSet<Degree> Degrees { get; set; }
 
         public virtual DbSet<Education> Educations { get; set; }

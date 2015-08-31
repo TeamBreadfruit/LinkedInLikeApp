@@ -235,6 +235,8 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ConnectionRequests\ConnectionRequestBindingModel.cs" />
+    <Compile Include="Models\ConnectionRequests\ConnectionRequestViewModel.cs" />
     <Compile Include="Models\Educations\DegreeBindingModel.cs" />
     <Compile Include="Models\Educations\DegreeViewModel.cs" />
     <Compile Include="Models\Educations\EditEducationBindingModel.cs" />

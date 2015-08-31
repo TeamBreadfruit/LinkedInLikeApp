@@ -13,6 +13,8 @@
 
         IRepository<Company> Companies { get; }
 
+        IRepository<ConnectionRequest> ConnectionRequests { get; }
+
         IRepository<Degree> Degrees { get; }
 
         IRepository<Education> Educations { get; }
