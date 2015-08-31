@@ -26,15 +26,16 @@ namespace LinkedIn.Services.Controllers
             var userId = this.User.Identity.GetUserId();
             if (userId == null)
             {
-                return this.Unauthorized();
+                return this.BadRequest("Invalid session token.");
             }
 
             var result =await this.Data.Educations.All()
                 .Where(e => e.Users.Any(u => u.Id == userId))
+                .OrderBy(e=>e.StartDate)
                 .Select(EducationViewModel.Create).ToListAsync();
             if (result == null)
             {
-                return this.NotFound();
+                return this.Ok("No data about this user education.");
             }
 
             return this.Ok(result);
@@ -76,7 +77,7 @@ namespace LinkedIn.Services.Controllers
             }
             if (model == null)
             {
-                return this.BadRequest("Invalid data");
+                return this.BadRequest("Invalid input data");
             }
             if (!this.ModelState.IsValid)
             {
@@ -118,7 +119,7 @@ namespace LinkedIn.Services.Controllers
             }
             if (model == null)
             {
-                return this.BadRequest("Invalid data");
+                return this.BadRequest("Invalid input data");
             }
             if (!this.ModelState.IsValid)
             {
@@ -189,7 +190,7 @@ namespace LinkedIn.Services.Controllers
 
             this.Data.Educations.Delete(educationToDelete);
             await this.Data.SaveChangesAsync();
-            return this.Ok("deleted");
+            return this.Ok("deleted successfully");
 
         } 
 

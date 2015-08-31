@@ -235,11 +235,13 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Educations\DegreeBindingModel.cs" />
     <Compile Include="Models\Educations\DegreeViewModel.cs" />
     <Compile Include="Models\Educations\EditEducationBindingModel.cs" />
     <Compile Include="Models\Educations\EducationBindingModel.cs" />
     <Compile Include="Models\Educations\EducationViewModel.cs" />
+    <Compile Include="Models\Groups\EditGroupBindingModel.cs" />
+    <Compile Include="Models\Groups\GroupBindingModel.cs" />
+    <Compile Include="Models\Groups\GroupViewModel.cs" />
     <Compile Include="Models\Messages\AddMessageBindingModel.cs" />
     <Compile Include="Models\Messages\EditMessageBindingModel.cs" />
     <Compile Include="Models\Messages\MessageViewModel.cs" />
