@@ -17,7 +17,6 @@ namespace LinkedIn.Services.Controllers
     [SessionAuthorize]
     public class GroupsController:BaseApiController
     {
-        // create , delete ,change , get and get all // get all for current user or get by id
 
         [HttpGet]
         [AllowAnonymous]
@@ -163,7 +162,7 @@ namespace LinkedIn.Services.Controllers
 
             if (groupResult == null)
             {
-                return this.BadRequest("Group id is not correct or you are not allowed to view it.");
+                return this.BadRequest("Group id is not correct or you are not allowed to edit it.");
             }
 
             groupResult.Description = model.Description ?? groupResult.Description;
