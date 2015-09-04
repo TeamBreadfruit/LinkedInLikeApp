@@ -6,6 +6,7 @@
     using System.Linq.Expressions;
 
     using LinkedIn.Models;
+    using LinkedIn.Services.Models.Educations;
     using LinkedIn.Services.Models.Jobs;
     using LinkedIn.Services.Models.Skills;
 
