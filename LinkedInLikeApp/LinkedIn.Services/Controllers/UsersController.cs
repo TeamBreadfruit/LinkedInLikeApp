@@ -4,13 +4,14 @@
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Script.Serialization;
 
     using LinkedIn.Data;
     using LinkedIn.Models;
-    using LinkedIn.Services.Models;
+    using LinkedIn.Services.Models.Users;
     using LinkedIn.Services.UserSessionUtils;
 
     using Microsoft.AspNet.Identity;
@@ -142,7 +143,7 @@
             return this.ResponseMessage(tokenServiceResponse);
         }
 
-        // POST api/User/Logout
+        // POST api/Users/Logout
         [HttpPost]
         [Route("Logout")]
         public IHttpActionResult Logout()
@@ -160,6 +161,23 @@
             {
                 message = "Logout successful."
             });
+        }
+
+        [HttpGet]
+        [Route("{username}")]
+        public IHttpActionResult GetUserInfo(string username)
+        {
+            var user = this.Data.Users.All()
+                .Where(u => u.UserName == username)
+                .Select(GetUserInfoViewModel.Create)
+                .FirstOrDefault();
+            
+            if (user == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(user);
         }
     }
 }

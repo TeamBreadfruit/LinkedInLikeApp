@@ -19,7 +19,7 @@ namespace LinkedIn.Services.Models
 
         public DateTime EndDate { get; set; }
 
-        public DegreeViewModels Degree { get; set; }
+        public DegreeViewModel Degree { get; set; }
 
         public double Grade { get; set; }
 
@@ -33,7 +33,7 @@ namespace LinkedIn.Services.Models
                     StartDate = a.StartDate,
                     EndDate = a.EndDate,
                     Location = a.Location,
-                    Degree = new DegreeViewModels()
+                    Degree = new DegreeViewModel()
                     {
                         Name = a.Degree.Name,
                         Description = a.Degree.Description

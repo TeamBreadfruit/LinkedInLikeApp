@@ -5,7 +5,7 @@ using System.Web;
 
 namespace LinkedIn.Services.Models
 {
-    public class DegreeViewModels
+    public class DegreeViewModel
     {
         public string Name { get; set; }
         public string Description { get; set; }
