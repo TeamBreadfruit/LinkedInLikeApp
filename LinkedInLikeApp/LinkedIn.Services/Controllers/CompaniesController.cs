@@ -6,11 +6,12 @@
     using System.Data.Entity;
     using System.Net;
     using System.Threading.Tasks;
+    using System.Linq.Dynamic;
 
     using LinkedIn.Models;
     using LinkedIn.Services.Models.Companies;
     using LinkedIn.Services.UserSessionUtils;
-
+    
     using Microsoft.AspNet.Identity;
 
     [RoutePrefix("api")]

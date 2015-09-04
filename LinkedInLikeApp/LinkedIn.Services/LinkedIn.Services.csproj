@@ -223,6 +223,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\ConnectionRequestsController.cs" />
     <Compile Include="Controllers\EducationsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
@@ -232,6 +233,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Companies\CompanyBindingModel.cs" />
+    <Compile Include="Models\Companies\CompanyViewModel.cs" />
+    <Compile Include="Models\Companies\EditCompanyBindingModel.cs" />
+    <Compile Include="Models\Jobs\JobCompanyViewModel.cs" />
     <Compile Include="Models\Jobs\JobViewModel.cs" />
     <Compile Include="Models\Skills\SkillViewModel.cs" />
     <Compile Include="Models\Users\UserBindingModels.cs" />
