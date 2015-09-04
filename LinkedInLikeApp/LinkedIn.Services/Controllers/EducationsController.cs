@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Web.Http;
-using LinkedIn.Services.Models;
-using LinkedIn.Services.UserSessionUtils;
-using Microsoft.AspNet.Identity;
-using System.Linq;
-using System.Net;
-using LinkedIn.Models;
-using LinkedIn.Services.Models.Education;
-
-namespace LinkedIn.Services.Controllers
+﻿namespace LinkedIn.Services.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Linq;
+    using System.Net;
+
+    using LinkedIn.Models;
+    using LinkedIn.Services.UserSessionUtils;
+    using LinkedIn.Services.Models.Educations;
+
+    using Microsoft.AspNet.Identity;
+
+
     [SessionAuthorize]
     [RoutePrefix("api")]
     public class EducationsController:BaseApiController

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Web;
-
-namespace LinkedIn.Services.Models.Groups
+﻿namespace LinkedIn.Services.Models.Groups
 {
+    using System;
+    using System.Linq.Expressions;
+
     public class GroupViewModel
     {
         public string Name { get; set; }

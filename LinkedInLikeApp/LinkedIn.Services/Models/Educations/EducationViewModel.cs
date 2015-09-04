@@ -1,13 +1,7 @@
-﻿
-
-namespace LinkedIn.Services.Models
+﻿namespace LinkedIn.Services.Models.Educations
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
-    using System.Web;
-    using LinkedIn.Models;
 
     public class EducationViewModel
     {

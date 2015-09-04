@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using LinkedIn.Models;
-using LinkedIn.Services.Models.Groups;
-using LinkedIn.Services.UserSessionUtils;
-using Microsoft.AspNet.Identity;
-
-namespace LinkedIn.Services.Controllers
+﻿namespace LinkedIn.Services.Controllers
 {
+    using System;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+
+    using LinkedIn.Models;
+    using LinkedIn.Services.Models.Groups;
+    using LinkedIn.Services.UserSessionUtils;
+
+    using Microsoft.AspNet.Identity;
+
     [RoutePrefix("api")]
     [SessionAuthorize]
     public class GroupsController:BaseApiController
@@ -73,7 +73,7 @@ namespace LinkedIn.Services.Controllers
             {
                 return this.Ok("No groups where found for the current user");
             }
-            return this.Ok(GroupsForCurrentUser());
+            return this.Ok(groupsForCurrentUser);
 
         }
 
@@ -97,13 +97,13 @@ namespace LinkedIn.Services.Controllers
             {
                 return this.BadRequest("Group id is not correct or you are not allowed to view it.");
             }
-            return this.Ok(GroupsForCurrentUser());
+            return this.Ok(resultGroup);
 
         }
 
         [HttpPost]
         [Route("user/group/create")]
-        public async Task<IHttpActionResult> GroupForCurrentUserById(GroupBindingModel model)
+        public async Task<IHttpActionResult> PostGroup(GroupBindingModel model)
         {
             var userId = this.User.Identity.GetUserId();
             var currentUser =await this.Data.Users.All().Where(u => u.Id == userId).ToListAsync();
@@ -124,7 +124,7 @@ namespace LinkedIn.Services.Controllers
             var group = new Group()
             {
                 Name = model.Name,
-                CreatedOn = model.CreatedOn,
+                CreatedOn = DateTime.Now,
                 Description = model.Description ?? null,
                 Users = currentUser
             };
@@ -134,10 +134,9 @@ namespace LinkedIn.Services.Controllers
             return StatusCode(HttpStatusCode.Created);
         }
 
-
         [HttpPut]
         [Route("user/group/{id}/edit")]
-        public async Task<IHttpActionResult> EditGroupForUserById(string id,EditGroupBindingModel model)
+        public async Task<IHttpActionResult> EditGroup(string id,EditGroupBindingModel model)
         {
             var userId = this.User.Identity.GetUserId();
             
@@ -173,10 +172,9 @@ namespace LinkedIn.Services.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-
         [HttpDelete]
         [Route("user/group/{id}/delete")]
-        public async Task<IHttpActionResult> DeleteGroupForUserById(string id)
+        public async Task<IHttpActionResult> DeleteGroup(string id)
         {
             var userId = this.User.Identity.GetUserId();
 

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
-namespace LinkedIn.Services.Models.Education
+﻿
+namespace LinkedIn.Services.Models.Educations
 {
+    using System;
+
     public class EditEducationBindingModel
     {
         public string Name { get; set; }
