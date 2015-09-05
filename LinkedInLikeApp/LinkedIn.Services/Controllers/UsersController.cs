@@ -190,5 +190,42 @@
 
             return this.Ok(users);
         }
+
+        [HttpPut]
+        [Route("me/EditProfile")]
+        public IHttpActionResult EditUserProfile(EditUserProfileBindingModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            var loggedUserId = this.User.Identity.GetUserId();
+            var loggedUser = this.Data.Users.All()
+                .FirstOrDefault(u => u.Id == loggedUserId);
+            if (loggedUser == null)
+            {
+                return this.BadRequest("Invalid user token");
+            }
+
+            var userWithSameEmailLikeModel = this.Data.Users.All()
+                .FirstOrDefault(u => u.Email == model.Email);
+            if (userWithSameEmailLikeModel != null && userWithSameEmailLikeModel.Id != loggedUserId)
+            {
+                return this.BadRequest("Email already taken.");
+            }
+
+            loggedUser.Name = model.Name;
+            loggedUser.Email = model.Email;
+            loggedUser.Address = model.Address;
+            loggedUser.Website = model.Website;
+            loggedUser.PhoneNumber = model.PhoneNumber;
+
+            this.Data.SaveChanges();
+            return this.Ok(new
+            {
+                message = "Profile edited successfully."
+            });
+        }
     }
 }
