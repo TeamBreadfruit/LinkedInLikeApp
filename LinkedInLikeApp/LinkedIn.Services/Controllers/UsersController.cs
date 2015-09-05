@@ -1,10 +1,10 @@
 ﻿namespace LinkedIn.Services.Controllers
 {
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Script.Serialization;
@@ -178,6 +178,17 @@
             }
 
             return this.Ok(user);
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> SearchForUser([FromUri]string search)
+        {
+            var users = await this.Data.Users.All()
+                .Where(u => u.UserName.Contains(search) || u.Name.Contains(search))
+                .Select(GetUserInfoViewModel.Create)
+                .ToListAsync();
+
+            return this.Ok(users);
         }
     }
 }
