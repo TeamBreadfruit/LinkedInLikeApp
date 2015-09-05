@@ -3,23 +3,22 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
-    using System.Threading.Tasks;
-    using System.Web.Http;
     using System.Linq;
     using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Http;
 
     using LinkedIn.Models;
-    using LinkedIn.Services.UserSessionUtils;
     using LinkedIn.Services.Models.Educations;
+    using LinkedIn.Services.UserSessionUtils;
 
     using Microsoft.AspNet.Identity;
 
 
     [SessionAuthorize]
     [RoutePrefix("api")]
-    public class EducationsController:BaseApiController
+    public class EducationsController : BaseApiController
     {
-        
         [Route("user/education/all")]
         [HttpGet]
         public async Task<IHttpActionResult> GetEducationsForUser()
@@ -30,9 +29,9 @@
                 return this.BadRequest("Invalid session token.");
             }
 
-            var result =await this.Data.Educations.All()
+            var result = await this.Data.Educations.All()
                 .Where(e => e.Users.Any(u => u.Id == userId))
-                .OrderBy(e=>e.StartDate)
+                .OrderBy( e=> e.StartDate)
                 .Select(EducationViewModel.Create).ToListAsync();
             if (result == null)
             {
@@ -53,9 +52,9 @@
             }
 
             var result = await this.Data.Educations.All()
-                .Where(e => e.Users.Any(u => u.Id == userId) && e.Id ==new Guid(id))
+                .Where(e => e.Users.Any(u => u.Id == userId) && e.Id == new Guid(id))
                 .Select(EducationViewModel.Create).ToListAsync();
-            if (result.Count==0)
+            if (result.Count == 0)
             {
                 return this.BadRequest("Invalid id ");
             }
@@ -82,13 +81,14 @@
             }
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
-            var degree =await this.Data.Degrees.All().FirstOrDefaultAsync(d=>d.Id==model.DegreeId) ;
+            var degree = await this.Data.Degrees.All().FirstOrDefaultAsync(d => d.Id == model.DegreeId);
             if (degree == null)
             {
                 return this.BadRequest("Invalid degree id");
             }
+
             degree.Description = model.DegreeDescription ?? null;
             await this.Data.SaveChangesAsync();
             Education education = new Education()
@@ -106,7 +106,7 @@
             };
             this.Data.Educations.Add(education);
             await this.Data.SaveChangesAsync();
-            return StatusCode(HttpStatusCode.Created);
+            return this.StatusCode(HttpStatusCode.Created);
         }
 
         [HttpPut]
@@ -124,10 +124,10 @@
             }
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
-            var educationsToCurrentUser =await this.Data.Educations.All()
+            var educationsToCurrentUser = await this.Data.Educations.All()
                 .Where(e => e.Users
                     .Any(u => u.Id == userId))
                 .ToListAsync();
@@ -139,7 +139,8 @@
             {
                 return this.Unauthorized();
             }
-            var result =await this.Data.Educations
+
+            var result = await this.Data.Educations
                 .All()
                 .FirstOrDefaultAsync(e => e.Id == id);
 
@@ -147,12 +148,11 @@
             {
                 return this.BadRequest("Invalid education id");
             }
-            var degree =await this.Data.Degrees.All().FirstOrDefaultAsync(d => d.Id == model.DegreeId);
+            var degree = await this.Data.Degrees.All().FirstOrDefaultAsync(d => d.Id == model.DegreeId);
             if (degree != null)
             {
                 degree.Description = model.DegreeDescription ?? null;
                 result.Degree = degree;
-
             }
 
             result.Name = model.Name ?? result.Name;
@@ -164,6 +164,7 @@
             await this.Data.SaveChangesAsync();
             return this.StatusCode(HttpStatusCode.NoContent);
         }
+
         [HttpDelete]
         [Route("user/education/{id}/delete")]
         public async Task<IHttpActionResult> EditEducation(Guid id)
@@ -174,26 +175,26 @@
                 return this.BadRequest("Invalid session token.");
             }
 
-            var educationsToCurrentUser =await this.Data.Educations.All()
+            var educationsToCurrentUser = await this.Data.Educations.All()
                 .Where(e => e.Users
                     .Any(u => u.Id == userId))
                 .ToListAsync();
 
             if (educationsToCurrentUser == null)
             {
-                return BadRequest("Education id is incorrect or you are not allowed to delete it");
+                return this.BadRequest("Education id is incorrect or you are not allowed to delete it");
             }
+
             if (educationsToCurrentUser.All(e => e.Id != id))
             {
                 return this.Unauthorized();
             }
+
             var educationToDelete = this.Data.Educations.All().FirstOrDefaultAsync(e => e.Id == id);
 
             this.Data.Educations.Delete(educationToDelete);
             await this.Data.SaveChangesAsync();
             return this.Ok("deleted successfully");
-
-        } 
-
+        }
     }
 }

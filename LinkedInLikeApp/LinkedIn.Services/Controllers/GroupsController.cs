@@ -15,17 +15,15 @@
 
     [RoutePrefix("api")]
     [SessionAuthorize]
-    public class GroupsController:BaseApiController
+    public class GroupsController : BaseApiController
     {
-
         [HttpGet]
         [AllowAnonymous]
         [Route("groups/all")]
         public async Task<IHttpActionResult> GetAll()
         {
-            var groups = await this.Data.Groups
-                .All()
-                .OrderBy(g=>g.Name)
+            var groups = await this.Data.Groups.All()
+                .OrderBy(g => g.Name)
                 .Select(GroupViewModel.Create).ToListAsync();
 
             if (!groups.Any())
@@ -40,9 +38,8 @@
         [Route("group/{id}")]
         public async Task<IHttpActionResult> GetById(string id)
         {
-            var group = await this.Data.Groups
-                .All()
-                .Where(g=>g.Id==new Guid(id))
+            var group = await this.Data.Groups.All()
+                .Where(g => g.Id == new Guid(id))
                 .Select(GroupViewModel.Create).ToListAsync();
 
             var groupResult = group.FirstOrDefault();
@@ -62,8 +59,7 @@
 
             var userId = this.User.Identity.GetUserId();
 
-            var groupsForCurrentUser =await this.Data.Groups
-                .All()
+            var groupsForCurrentUser = await this.Data.Groups.All()
                 .Where(g => g.Users
                     .Any(u => u.Id == userId))
                 .Select(GroupViewModel.Create)
@@ -84,8 +80,7 @@
 
             var userId = this.User.Identity.GetUserId();
 
-            var groupForCurrentUserById = await this.Data.Groups
-                .All()
+            var groupForCurrentUserById = await this.Data.Groups.All()
                 .Where(g => g.Users
                     .Any(u => u.Id == userId) && g.Id== new Guid(id))
                 .Select(GroupViewModel.Create)
@@ -93,7 +88,7 @@
 
             var resultGroup = groupForCurrentUserById.FirstOrDefault();
 
-            if (resultGroup==null)
+            if (resultGroup == null)
             {
                 return this.BadRequest("Group id is not correct or you are not allowed to view it.");
             }
@@ -106,11 +101,12 @@
         public async Task<IHttpActionResult> PostGroup(GroupBindingModel model)
         {
             var userId = this.User.Identity.GetUserId();
-            var currentUser =await this.Data.Users.All().Where(u => u.Id == userId).ToListAsync();
-            if (!ModelState.IsValid)
+            var currentUser = await this.Data.Users.All().Where(u => u.Id == userId).ToListAsync();
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
+
             if (model == null)
             {
                 return this.BadRequest("Invalid input data");
@@ -131,12 +127,12 @@
             this.Data.Groups.Add(group);
             await this.Data.SaveChangesAsync();
 
-            return StatusCode(HttpStatusCode.Created);
+            return this.StatusCode(HttpStatusCode.Created);
         }
 
         [HttpPut]
         [Route("user/group/{id}/edit")]
-        public async Task<IHttpActionResult> EditGroup(string id,EditGroupBindingModel model)
+        public async Task<IHttpActionResult> EditGroup(string id, EditGroupBindingModel model)
         {
             var userId = this.User.Identity.GetUserId();
             
@@ -144,10 +140,12 @@
             {
                 return this.BadRequest("Invalid session token.");
             }
-            if (!ModelState.IsValid)
+
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
+
             if (model == null)
             {
                 return this.BadRequest("Invalid input data");
@@ -169,7 +167,7 @@
             
             await this.Data.SaveChangesAsync();
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return this.StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpDelete]

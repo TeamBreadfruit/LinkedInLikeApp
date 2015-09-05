@@ -5,12 +5,6 @@
 
     public class GroupViewModel
     {
-        public string Name { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public string Description { get; set; }
-
         public static Expression<Func<LinkedIn.Models.Group, GroupViewModel>> Create
         {
             get
@@ -23,5 +17,11 @@
                 };
             }
         }
+
+        public string Name { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public string Description { get; set; }
     }
 }

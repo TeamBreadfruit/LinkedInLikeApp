@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
-namespace LinkedIn.Services.Models.Messages
+﻿namespace LinkedIn.Services.Models.Messages
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class AddMessageBindingModel
     {
         [Required]

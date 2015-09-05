@@ -1,12 +1,11 @@
 ﻿namespace LinkedIn.Services.Controllers
 {
     using System;
-    using System.Linq;
-    using System.Web.Http;
     using System.Data.Entity;
+    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
-    using System.Linq.Dynamic;
+    using System.Web.Http;
 
     using LinkedIn.Models;
     using LinkedIn.Services.Models.Companies;
@@ -16,7 +15,7 @@
 
     [RoutePrefix("api")]
     [SessionAuthorize]
-    public class CompaniesController :BaseApiController
+    public class CompaniesController : BaseApiController
     {
         [Route("companies/all")]
         [AllowAnonymous]
@@ -80,13 +79,12 @@
         [Route("user/company/{id}")]
         public async Task<IHttpActionResult> CompanypForCurrentUserById(string id)
         {
-
             var userId = this.User.Identity.GetUserId();
 
             var companyForCurrentUserById = await this.Data.Companies
                 .All()
-                .Where(c=>c.OwnerId==userId)
-                .Where(c=>c.Id==new Guid(id))
+                .Where(c => c.OwnerId == userId)
+                .Where(c => c.Id == new Guid(id))
                 .Select(CompanyViewModel.Create)
                 .ToListAsync();
 
@@ -105,9 +103,9 @@
         public async Task<IHttpActionResult> PostCompany(CompanyBindingModel model)
         {
             var userId = this.User.Identity.GetUserId();
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
             if (model == null)
             {
@@ -143,17 +141,17 @@
             {
                 return this.BadRequest("Invalid session token.");
             }
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
             if (model == null)
             {
                 return this.BadRequest("Invalid input data");
             }
 
-            var company =await this.Data.Companies.All()
-                .Where(c=>c.Id==new Guid(id) && c.OwnerId==userId)
+            var company = await this.Data.Companies.All()
+                .Where(c => c.Id == new Guid(id) && c.OwnerId == userId)
                 .FirstOrDefaultAsync();
 
             if (company == null)
@@ -166,7 +164,7 @@
 
             await this.Data.SaveChangesAsync();
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return this.StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpDelete]
@@ -192,7 +190,6 @@
             await this.Data.SaveChangesAsync();
 
             return this.Ok("deleted successfully");
-        } 
-
+        }
     }
 }

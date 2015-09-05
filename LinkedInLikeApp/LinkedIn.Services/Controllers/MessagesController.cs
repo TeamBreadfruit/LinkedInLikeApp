@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
-using LinkedIn.Data;
-using LinkedIn.Models;
-using LinkedIn.Services.Models.Messages;
-using Microsoft.AspNet.Identity;
-using LinkedIn.Services.UserSessionUtils;
-
-namespace LinkedIn.Services.Controllers
+﻿namespace LinkedIn.Services.Controllers
 {
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+
+    using LinkedIn.Models;
+    using LinkedIn.Services.Models.Messages;
+    using LinkedIn.Services.UserSessionUtils;
+
+    using Microsoft.AspNet.Identity;
+
     [SessionAuthorize]
     [RoutePrefix("api")]
     public class MessagesController : BaseApiController
     {
-        private const int PAGE_SIZE = 20;
+        private const int PageSize = 20;
 
         [HttpGet]
         [Route("user/messages/sent/{page?}")]
@@ -36,12 +33,14 @@ namespace LinkedIn.Services.Controllers
 
             currentPage = currentPage < 0 ? 0 : currentPage;
 
-            var messages = await this.Data.Messages.All().Where(m => m.FromUserId == userId).OrderBy(m => m.SendOn).Select(MessageViewModel.DataModel)
-                .Skip(currentPage * PAGE_SIZE)
-                .Take(PAGE_SIZE)
+            var messages = await this.Data.Messages.All()
+                .Where(m => m.FromUserId == userId).OrderBy(m => m.SendOn)
+                .Skip(currentPage * PageSize)
+                .Take(PageSize)
+                .Select(MessageViewModel.DataModel)
                 .ToListAsync();
 
-            return Ok(messages);
+            return this.Ok(messages);
         }
 
         [HttpGet]
@@ -57,12 +56,15 @@ namespace LinkedIn.Services.Controllers
 
             currentPage = currentPage < 0 ? 0 : currentPage;
 
-            var messages = await this.Data.Messages.All().Where(m => m.ToUserId == userId).OrderBy(m => m.SendOn).Select(MessageViewModel.DataModel)
-                .Skip(currentPage * PAGE_SIZE)
-                .Take(PAGE_SIZE)
+            var messages = await this.Data.Messages.All()
+                .Where(m => m.ToUserId == userId)
+                .OrderBy(m => m.SendOn)
+                .Skip(currentPage * PageSize)
+                .Take(PageSize)
+                .Select(MessageViewModel.DataModel)
                 .ToListAsync();
 
-            return Ok(messages);
+            return this.Ok(messages);
         }
 
         [AllowAnonymous]
@@ -74,17 +76,20 @@ namespace LinkedIn.Services.Controllers
             var group = await this.Data.Groups.All().FirstOrDefaultAsync(g => g.Id == new Guid(id));
             if (group == null)
             {
-                return BadRequest("Group id is incorrect");
+                return this.BadRequest("Group id is incorrect");
             }
 
             currentPage = currentPage < 0 ? 0 : currentPage;
 
-            var messages = await this.Data.Messages.All().Where(m => m.Group == group).OrderBy(m => m.SendOn).Select(MessageViewModel.DataModel)
-                .Skip(currentPage * PAGE_SIZE)
-                .Take(PAGE_SIZE)
+            var messages = await this.Data.Messages.All()
+                .Where(m => m.Group == group)
+                .OrderBy(m => m.SendOn)
+                .Skip(currentPage * PageSize)
+                .Take(PageSize)
+                .Select(MessageViewModel.DataModel)
                 .ToListAsync();
 
-            return Ok(messages);
+            return this.Ok(messages);
         }
 
         [HttpGet]
@@ -97,7 +102,8 @@ namespace LinkedIn.Services.Controllers
                 return this.BadRequest("Invalid session token.");
             }
 
-            var messages = await this.Data.Messages.All().Where(m => m.Id == new Guid(id) && (m.GroupId != null || m.FromUserId == userId || m.ToUserId == userId))
+            var messages = await this.Data.Messages.All()
+                .Where(m => m.Id == new Guid(id) && (m.GroupId != null || m.FromUserId == userId || m.ToUserId == userId))
                 .Select(MessageViewModel.DataModel)
                 .ToListAsync();
 
@@ -105,19 +111,19 @@ namespace LinkedIn.Services.Controllers
             
             if (resultMessage == null)
             {
-                return BadRequest("Message id is incorrect or you are not allowed to view this message");
+                return this.BadRequest("Message id is incorrect or you are not allowed to view this message");
             }
 
-            return Ok(resultMessage);
+            return this.Ok(resultMessage);
         }
 
         [HttpPut]
         [Route("messages/{id}/edit")]
         public async Task<IHttpActionResult> PutMessage(string id, EditMessageBindingModel message)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var userId = this.User.Identity.GetUserId();
@@ -126,7 +132,8 @@ namespace LinkedIn.Services.Controllers
                 return this.BadRequest("Invalid session token.");
             }
 
-            var existingMessasge = await this.Data.Messages.All().FirstOrDefaultAsync(m => m.Id == new Guid(id));
+            var existingMessasge = await this.Data.Messages.All()
+                .FirstOrDefaultAsync(m => m.Id == new Guid(id));
             if (existingMessasge == null)
             {
                 return this.BadRequest("Message id is invalid.");
@@ -145,24 +152,24 @@ namespace LinkedIn.Services.Controllers
                 var rowsAffected = await this.Data.SaveChangesAsync();
                 if (rowsAffected != 1)
                 {
-                    return BadRequest("Something went wrong");
+                    return this.BadRequest("Something went wrong");
                 }
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Something went wrong. Try again.");
+                return this.BadRequest("Something went wrong. Try again.");
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return this.StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpPost]
         [Route("messages/create")]
         public async Task<IHttpActionResult> PostMessage(AddMessageBindingModel message)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var userId = this.User.Identity.GetUserId();
@@ -173,15 +180,16 @@ namespace LinkedIn.Services.Controllers
 
             if (message.ToUserId != null && message.GroupId != null)
             {
-                return BadRequest("You cant send a message to a user and a group at the same time");
+                return this.BadRequest("You cant send a message to a user and a group at the same time");
             }
             else if (message.GroupId != null)
             {
-                var userInGroup = await this.Data.Groups.All().FirstOrDefaultAsync(g => g.Id == new Guid(message.GroupId) && g.Users.Any(u => u.Id == userId));
+                var userInGroup = await this.Data.Groups.All()
+                    .FirstOrDefaultAsync(g => g.Id == new Guid(message.GroupId) && g.Users.Any(u => u.Id == userId));
 
                 if (userInGroup == null)
                 {
-                    return BadRequest("You have no rights to post in this group or the group does not exist");
+                    return this.BadRequest("You have no rights to post in this group or the group does not exist");
                 }
             }
             else
@@ -190,7 +198,7 @@ namespace LinkedIn.Services.Controllers
 
                 if (toUser == null)
                 {
-                    return BadRequest("Incorrect receiver id. You cant send a message to no one.");
+                    return this.BadRequest("Incorrect receiver id. You cant send a message to no one.");
                 }
             }
 
@@ -208,10 +216,10 @@ namespace LinkedIn.Services.Controllers
             var rowsAffected = await this.Data.SaveChangesAsync();
             if (rowsAffected != 1)
             {
-                return BadRequest("Something went wrong");
+                return this.BadRequest("Something went wrong");
             }
 
-            return StatusCode(HttpStatusCode.Created);
+            return this.StatusCode(HttpStatusCode.Created);
         }
 
         // DELETE: api/Messages/5
@@ -224,20 +232,21 @@ namespace LinkedIn.Services.Controllers
                 return this.BadRequest("Invalid session token.");
             }
 
-            Message message = await this.Data.Messages.All().FirstOrDefaultAsync(m => m.Id == id && (m.FromUserId == userId || m.ToUserId == userId));
+            Message message = await this.Data.Messages.All()
+                .FirstOrDefaultAsync(m => m.Id == id && (m.FromUserId == userId || m.ToUserId == userId));
             if (message == null)
             {
-                return BadRequest("Message id is incorrect or you are not allowed to delete this message");
+                return this.BadRequest("Message id is incorrect or you are not allowed to delete this message");
             }
 
             this.Data.Messages.Delete(message);
             int rowsAffected = await this.Data.SaveChangesAsync();
             if (rowsAffected != 1)
             {
-                return BadRequest("Something went wrong");
+                return this.BadRequest("Something went wrong");
             }
 
-            return Ok(message);
+            return this.Ok(message);
         }
     }
 }

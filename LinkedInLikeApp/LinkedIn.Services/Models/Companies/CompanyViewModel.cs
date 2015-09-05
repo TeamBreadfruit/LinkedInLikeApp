@@ -10,16 +10,6 @@
 
     public class CompanyViewModel
     {
-        public string Name { get; set; }
-
-        public string Email { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-
-        public string OwnerName { get; set; }
-
-        public IEnumerable<JobCompanyViewModel> Jobs { get; set; } 
-
         public static Expression<Func<Company, CompanyViewModel>> Create
         {
             get
@@ -35,8 +25,17 @@
                         Name = j.Name
                     })
                 };
-                
             }
         }
+
+        public string Name { get; set; }
+
+        public string Email { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public string OwnerName { get; set; }
+
+        public IEnumerable<JobCompanyViewModel> Jobs { get; set; } 
     }
 }

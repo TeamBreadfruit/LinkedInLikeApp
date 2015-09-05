@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using LinkedIn.Models;
-using System.Linq.Expressions;
-
-namespace LinkedIn.Services.Models.Messages
+﻿namespace LinkedIn.Services.Models.Messages
 {
+    using System;
+    using System.Linq.Expressions;
+
+    using LinkedIn.Models;
+
     public class MessageViewModel
     {
         public static Expression<Func<Message, MessageViewModel>> DataModel

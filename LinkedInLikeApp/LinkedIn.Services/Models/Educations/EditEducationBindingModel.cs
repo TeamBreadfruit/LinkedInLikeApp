@@ -1,5 +1,4 @@
-﻿
-namespace LinkedIn.Services.Models.Educations
+﻿namespace LinkedIn.Services.Models.Educations
 {
     using System;
 

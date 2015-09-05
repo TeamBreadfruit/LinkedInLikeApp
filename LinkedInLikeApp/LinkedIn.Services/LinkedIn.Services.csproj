@@ -239,8 +239,12 @@
     <Compile Include="Models\Jobs\JobCompanyViewModel.cs" />
     <Compile Include="Models\Jobs\JobViewModel.cs" />
     <Compile Include="Models\Skills\SkillViewModel.cs" />
-    <Compile Include="Models\Users\UserBindingModels.cs" />
-    <Compile Include="Models\Users\UserViewModels.cs" />
+    <Compile Include="Models\Users\EditUserProfileBindingModel.cs" />
+    <Compile Include="Models\Users\LoginUserBindingModel.cs" />
+    <Compile Include="Models\Users\RegisterUserBindingModel.cs" />
+    <Compile Include="Models\Users\ChangePasswordBindingModel.cs" />
+    <Compile Include="Models\Users\UserRegisterViewModel.cs" />
+    <Compile Include="Models\Users\GetUserInfoViewModel.cs" />
     <Compile Include="Models\ConnectionRequests\ConnectionRequestBindingModel.cs" />
     <Compile Include="Models\ConnectionRequests\ConnectionRequestViewModel.cs" />
     <Compile Include="Models\Educations\DegreeViewModel.cs" />

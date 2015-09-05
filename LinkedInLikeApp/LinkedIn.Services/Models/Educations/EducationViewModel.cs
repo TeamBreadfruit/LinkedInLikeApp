@@ -5,18 +5,6 @@
 
     public class EducationViewModel
     {
-        public string Name { get; set; }
-
-        public string Location { get; set; }
-
-        public DateTime StartDate { get; set; }
-
-        public DateTime EndDate { get; set; }
-
-        public DegreeViewModel Degree { get; set; }
-
-        public double Grade { get; set; }
-
         public static Expression<Func<LinkedIn.Models.Education, EducationViewModel>> Create
         {
             get
@@ -33,9 +21,20 @@
                         Description = a.Degree.Description
                     },
                     Grade = a.Grade
-
                 };
             }
         }
+
+        public string Name { get; set; }
+
+        public string Location { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public DegreeViewModel Degree { get; set; }
+
+        public double Grade { get; set; }
     }
 }
