@@ -227,5 +227,30 @@
                 message = "Profile edited successfully."
             });
         }
+
+        [HttpPut]
+        [Route("me/ChangePassword")]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            var changePasswordResult = await this.UserManager.ChangePasswordAsync(
+                this.User.Identity.GetUserId(),
+                model.OldPassword,
+                model.NewPassword);
+
+            if (!changePasswordResult.Succeeded)
+            {
+                return this.GetErrorResult(changePasswordResult);
+            }
+
+            return this.Ok(new
+            {
+                message = "Password changed successfully."
+            });
+        }
     }
 }
