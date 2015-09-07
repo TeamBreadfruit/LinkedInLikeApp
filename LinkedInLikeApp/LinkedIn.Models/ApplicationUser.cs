@@ -10,7 +10,7 @@
 
     public class ApplicationUser : IdentityUser
     {
-        private ICollection<Job> jobs;
+        private ICollection<UserJob> jobs;
         private ICollection<Skill> skills;
         private ICollection<Education> educations;
         private ICollection<Group> groups;
@@ -22,7 +22,7 @@
 
         public ApplicationUser()
         {
-            this.jobs = new HashSet<Job>();
+            this.jobs = new HashSet<UserJob>();
             this.skills = new HashSet<Skill>();
             this.educations = new HashSet<Education>();
             this.groups = new HashSet<Group>();
@@ -39,7 +39,7 @@
 
         public string Website { get; set; }
 
-        public virtual ICollection<Job> Jobs
+        public virtual ICollection<UserJob> Jobs
         {
             get { return this.jobs; } 
             set { this.jobs = value; }

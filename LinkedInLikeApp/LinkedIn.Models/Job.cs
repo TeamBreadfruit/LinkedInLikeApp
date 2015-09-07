@@ -6,12 +6,12 @@
 
     public class Job
     {
-        private ICollection<ApplicationUser> users;
+        private ICollection<UserJob> users;
 
         public Job()
         {
             this.Id = Guid.NewGuid();
-            this.users = new HashSet<ApplicationUser>();
+            this.users = new HashSet<UserJob>();
         }
 
         [Key]
@@ -19,17 +19,11 @@
 
         public string Name { get; set; }
 
-        public string Description { get; set; }
-
-        public Guid CompanyId { get; set; }
+        public Guid? CompanyId { get; set; }
 
         public virtual Company Company { get; set; }
 
-        public DateTime StartDate { get; set; }
-
-        public DateTime EndDate { get; set; }
-
-        public virtual ICollection<ApplicationUser> Users
+        public virtual ICollection<UserJob> Users
         {
             get { return this.users; } 
             set { this.users = value; }

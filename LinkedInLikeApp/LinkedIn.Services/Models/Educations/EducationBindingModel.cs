@@ -19,7 +19,7 @@
         public DateTime EndDate { get; set; }
 
         [Required]
-        public Guid  DegreeId { get; set; }
+        public Guid DegreeId { get; set; }
 
         public string DegreeDescription { get; set; }
 

@@ -23,6 +23,8 @@
 
         IRepository<Job> Jobs { get; }
 
+        IRepository<UserJob> UserJobs { get; }
+
         IRepository<Message> Messages { get; }
 
         IRepository<Skill> Skills { get; }

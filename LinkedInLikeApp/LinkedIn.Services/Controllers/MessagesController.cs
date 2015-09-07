@@ -222,9 +222,9 @@
             return this.StatusCode(HttpStatusCode.Created);
         }
 
-        // DELETE: api/Messages/5
+        [HttpDelete]
         [Route("messages/{id}/delete")]
-        public async Task<IHttpActionResult> DeleteMessage(Guid id)
+        public async Task<IHttpActionResult> DeleteMessage(string id)
         {
             var userId = this.User.Identity.GetUserId();
             if (userId == null)
@@ -233,7 +233,7 @@
             }
 
             Message message = await this.Data.Messages.All()
-                .FirstOrDefaultAsync(m => m.Id == id && (m.FromUserId == userId || m.ToUserId == userId));
+                .FirstOrDefaultAsync(m => m.Id == new Guid(id) && (m.FromUserId == userId || m.ToUserId == userId));
             if (message == null)
             {
                 return this.BadRequest("Message id is incorrect or you are not allowed to delete this message");

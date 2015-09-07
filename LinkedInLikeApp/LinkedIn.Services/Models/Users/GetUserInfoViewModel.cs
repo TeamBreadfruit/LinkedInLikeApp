@@ -40,11 +40,11 @@
                             Description = e.Degree.Description
                         }
                     }),
-                    Jobs = u.Jobs.Select(j => new JobViewModel
+                    Jobs = u.Jobs.Select(j => new UserJobViewModel
                     {
-                        Name = j.Name,
+                        Name = j.Job.Name,
                         Description = j.Description,
-                        Company = j.Company.Name,
+                        Company = j.Job.Company.Name,
                         StartDate = j.StartDate,
                         EndDate = j.EndDate
                     })
@@ -68,6 +68,6 @@
 
         public IEnumerable<EducationViewModel> Educations { get; set; }
 
-        public IEnumerable<JobViewModel> Jobs { get; set; }
+        public IEnumerable<UserJobViewModel> Jobs { get; set; }
     }
 }

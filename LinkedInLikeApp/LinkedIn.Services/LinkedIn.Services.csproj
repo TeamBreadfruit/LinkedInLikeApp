@@ -228,6 +228,7 @@
     <Compile Include="Controllers\EducationsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobsController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -236,8 +237,12 @@
     <Compile Include="Models\Companies\CompanyBindingModel.cs" />
     <Compile Include="Models\Companies\CompanyViewModel.cs" />
     <Compile Include="Models\Companies\EditCompanyBindingModel.cs" />
-    <Compile Include="Models\Jobs\JobCompanyViewModel.cs" />
+    <Compile Include="Models\Jobs\JobBindingModel.cs" />
+    <Compile Include="Models\Jobs\JobUserViewModel.cs" />
     <Compile Include="Models\Jobs\JobViewModel.cs" />
+    <Compile Include="Models\Jobs\AddUserJobBindingModel.cs" />
+    <Compile Include="Models\Jobs\JobCompanyViewModel.cs" />
+    <Compile Include="Models\Jobs\UserJobViewModel.cs" />
     <Compile Include="Models\Skills\SkillViewModel.cs" />
     <Compile Include="Models\Users\EditUserProfileBindingModel.cs" />
     <Compile Include="Models\Users\LoginUserBindingModel.cs" />
@@ -305,7 +310,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

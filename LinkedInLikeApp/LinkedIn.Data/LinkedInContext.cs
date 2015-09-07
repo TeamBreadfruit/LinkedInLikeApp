@@ -26,6 +26,8 @@ namespace LinkedIn.Data
 
         public virtual DbSet<Job> Jobs { get; set; }
 
+        public virtual DbSet<UserJob> UserJobs { get; set; }
+
         public virtual DbSet<Message> Messages { get; set; }
 
         public virtual DbSet<Skill> Skills { get; set; }

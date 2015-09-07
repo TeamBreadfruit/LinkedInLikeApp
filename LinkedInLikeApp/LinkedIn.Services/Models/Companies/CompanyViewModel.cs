@@ -23,7 +23,7 @@
                     Jobs = g.Jobs.Select(j=> new JobCompanyViewModel()
                     {
                         Name = j.Name
-                    })
+                    }).Distinct()
                 };
             }
         }

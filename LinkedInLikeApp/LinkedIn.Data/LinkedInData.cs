@@ -66,6 +66,11 @@
             get { return this.GetRepository<Job>(); }
         }
 
+        public IRepository<UserJob> UserJobs
+        {
+            get { return this.GetRepository<UserJob>(); }
+        }
+
         public IRepository<Message> Messages
         {
             get { return this.GetRepository<Message>(); }
