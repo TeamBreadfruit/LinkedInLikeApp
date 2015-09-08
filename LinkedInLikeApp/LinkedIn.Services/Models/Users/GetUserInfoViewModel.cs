@@ -9,7 +9,7 @@
     using LinkedIn.Services.Models.Educations;
     using LinkedIn.Services.Models.Jobs;
     using LinkedIn.Services.Models.Skills;
-
+    
     public class GetUserInfoViewModel
     {
         public static Expression<Func<ApplicationUser, GetUserInfoViewModel>> Create
