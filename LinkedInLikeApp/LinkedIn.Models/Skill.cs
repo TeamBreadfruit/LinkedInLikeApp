@@ -19,6 +19,7 @@
         public Guid Id { get; set; }
 
         [Required]
+        [MinLength(3)]
         public string Name { get; set; }
 
         public string Description { get; set; }

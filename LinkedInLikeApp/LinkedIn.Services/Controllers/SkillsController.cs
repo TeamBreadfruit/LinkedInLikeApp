@@ -130,7 +130,7 @@ namespace LinkedIn.Services.Controllers
             }
             if (model == null)
             {
-                return this.BadRequest("Invalid input data");
+                return this.BadRequest("Invalid input datta");
             }
             if (!this.ModelState.IsValid)
             {
