@@ -6,6 +6,7 @@
 
     public class Skill
     {
+        
         private ICollection<ApplicationUser> users;
 
         public Skill()
@@ -17,7 +18,10 @@
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
+
+        public string Description { get; set; }
 
         public virtual ICollection<ApplicationUser> Users
         {
