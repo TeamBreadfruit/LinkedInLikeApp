@@ -1,6 +1,5 @@
 ﻿namespace LinkedIn.Services.Models.Skills
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
 
     public class EditSkillBindingModel
@@ -9,6 +8,5 @@
         public string Name { get; set; }
 
         public string Description { get; set; }
-
     }
 }

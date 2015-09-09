@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Web.Http;
-using LinkedIn.Models;
-using LinkedIn.Services.UserSessionUtils;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using LinkedIn.Services.Models;
-using LinkedIn.Services.Models.Skills;
-
-namespace LinkedIn.Services.Controllers
+﻿namespace LinkedIn.Services.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Linq;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using LinkedIn.Models;
+    using LinkedIn.Services.Models;
+    using LinkedIn.Services.Models.Skills;
+    using LinkedIn.Services.UserSessionUtils;
+    using Microsoft.AspNet.Identity;
+
     [SessionAuthorize]
     [RoutePrefix("api")]
     public class SkillsController : BaseApiController
     {
-
         // GET: api/Skills
-
         [Route("user/skill/all")]
         [HttpGet]
         public async Task<IHttpActionResult> GetSkillsForUser()
@@ -44,7 +41,6 @@ namespace LinkedIn.Services.Controllers
         }
 
         // GET: api/Skills/5
-
         [Route("user/skill/{id}")]
         [HttpGet]
         public async Task<IHttpActionResult> UserSkillById(string id)
@@ -76,13 +72,15 @@ namespace LinkedIn.Services.Controllers
             {
                 return this.BadRequest("Invalid session token.");
             }
+
             if (model == null)
             {
                 return this.BadRequest("Invalid input data");
             }
+
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var skillsToCurrentUser = await this.Data.Skills.All()
@@ -93,10 +91,12 @@ namespace LinkedIn.Services.Controllers
             {
                 return this.Unauthorized();
             }
+
             if (skillsToCurrentUser.All(s => s.Id != id))
             {
                 return this.Unauthorized();
             }
+
             var result = await this.Data.Skills
                 .All()
                 .FirstOrDefaultAsync(s => s.Id == id);
@@ -105,7 +105,6 @@ namespace LinkedIn.Services.Controllers
             {
                 return this.BadRequest("Invalid skill id");
             }
-
 
             result.Name = model.Name ?? result.Name;
             result.Description = model.Description ?? result.Description;
@@ -123,18 +122,19 @@ namespace LinkedIn.Services.Controllers
 
             ApplicationUser currentUser = await this.Data.Users.All().FirstOrDefaultAsync(us => us.Id == userId);
 
-
             if (userId == null)
             {
                 return this.BadRequest("Invalid session token.");
             }
+
             if (model == null)
             {
                 return this.BadRequest("Invalid input datta");
             }
+
             if (!this.ModelState.IsValid)
             {
-                return this.BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             await this.Data.SaveChangesAsync();
@@ -149,7 +149,7 @@ namespace LinkedIn.Services.Controllers
             };
             this.Data.Skills.Add(skill);
             await this.Data.SaveChangesAsync();
-            return StatusCode(HttpStatusCode.Created);
+            return this.StatusCode(HttpStatusCode.Created);
         }
 
         // DELETE: api/Skills/5
@@ -170,19 +170,19 @@ namespace LinkedIn.Services.Controllers
 
             if (skillsToCurrentUser == null)
             {
-                return BadRequest("Skill id is incorrect or you are not allowed to delete it");
+                return this.BadRequest("Skill id is incorrect or you are not allowed to delete it");
             }
+
             if (skillsToCurrentUser.All(s => s.Id != id))
             {
                 return this.Unauthorized();
             }
+
             var skillToDelete = this.Data.Skills.All().FirstOrDefaultAsync(s => s.Id == id);
 
             this.Data.Skills.Delete(skillToDelete);
             await this.Data.SaveChangesAsync();
             return this.Ok("deleted successfully");
-
         }
-
     }
 }

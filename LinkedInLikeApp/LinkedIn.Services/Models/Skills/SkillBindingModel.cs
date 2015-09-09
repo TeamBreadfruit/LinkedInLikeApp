@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace LinkedIn.Services.Models
+﻿namespace LinkedIn.Services.Models.Skills
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class SkillBindingModel
     {
         [Required]
