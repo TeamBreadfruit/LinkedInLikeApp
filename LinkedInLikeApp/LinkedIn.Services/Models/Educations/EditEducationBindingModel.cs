@@ -12,9 +12,7 @@
 
         public DateTime? EndDate { get; set; }
 
-        public Guid? DegreeId { get; set; }
-
-        public string DegreeDescription { get; set; }
+        public string DegreeName { get; set; }
 
         public double? Grade { get; set; }
     }

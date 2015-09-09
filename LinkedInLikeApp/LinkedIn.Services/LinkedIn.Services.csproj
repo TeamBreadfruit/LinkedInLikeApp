@@ -255,6 +255,7 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\ConnectionRequestsController.cs" />
+    <Compile Include="Controllers\DegreesController.cs" />
     <Compile Include="Controllers\EducationsController.cs" />
     <Compile Include="Controllers\GroupsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

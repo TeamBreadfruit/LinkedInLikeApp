@@ -11,6 +11,7 @@
             {
                 return a => new EducationViewModel()
                 {
+                    Id = a.Id,
                     Name = a.Name,
                     StartDate = a.StartDate,
                     EndDate = a.EndDate,
@@ -24,6 +25,7 @@
                 };
             }
         }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

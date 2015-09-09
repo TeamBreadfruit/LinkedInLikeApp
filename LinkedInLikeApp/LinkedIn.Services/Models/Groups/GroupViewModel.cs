@@ -11,12 +11,15 @@
             {
                 return g => new GroupViewModel()
                 {
+                    Id = g.Id,
                     Name = g.Name,
                     CreatedOn = g.CreatedOn,
                     Description = g.Description
                 };
             }
         }
+
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

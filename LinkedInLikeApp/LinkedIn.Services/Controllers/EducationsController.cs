@@ -5,6 +5,7 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Net;
+    using System.Text;
     using System.Threading.Tasks;
     using System.Web.Http;
 
@@ -83,10 +84,19 @@
             {
                 return this.BadRequest(this.ModelState);
             }
-            var degree = await this.Data.Degrees.All().FirstOrDefaultAsync(d => d.Id == model.DegreeId);
+            var degree = await this.Data.Degrees.All().FirstOrDefaultAsync(d => d.Name==model.DegreeName);
             if (degree == null)
             {
-                return this.BadRequest("Invalid degree id");
+                var errorMessage = "Invalid degree name.Posiible degree names: " +
+                                    "Juris Doctor (J.D.) ," + "Doctor of Medicine (M.D.) ," +
+                                    "Master's of Business Administration (M.B.A) ," +
+                                    "Engineer's Degree ,"+"High School"+
+                                    "Doctor of Philosophy (Ph.D.) ,"+
+                                    "Associate's Degree ,"+
+                                    "Master's Degree ," +
+                                    "Bachelor's Degree ," +
+                                    "Bachelor's Degree ,";
+                return this.BadRequest(errorMessage);
             }
 
             degree.Description = model.DegreeDescription ?? null;
@@ -102,7 +112,7 @@
                 {
                     currentUser
                 },
-                DegreeId = model.DegreeId,
+                DegreeId = degree.Id,
             };
             this.Data.Educations.Add(education);
             await this.Data.SaveChangesAsync();
@@ -148,10 +158,10 @@
             {
                 return this.BadRequest("Invalid education id");
             }
-            var degree = await this.Data.Degrees.All().FirstOrDefaultAsync(d => d.Id == model.DegreeId);
+            var degree = await this.Data.Degrees.All().FirstOrDefaultAsync(d => d.Name == model.DegreeName);
             if (degree != null)
             {
-                degree.Description = model.DegreeDescription ?? null;
+                degree.Name = model.DegreeName ?? degree.Name;
                 result.Degree = degree;
             }
 
