@@ -36,8 +36,7 @@
                         EndDate = e.EndDate,
                         Degree = new DegreeViewModel
                         {
-                            Name = e.Degree.Name,
-                            Description = e.Degree.Description
+                            Name = e.Degree.Name
                         }
                     }),
                     Jobs = u.Jobs.Select(j => new UserJobViewModel

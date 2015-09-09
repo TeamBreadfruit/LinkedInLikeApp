@@ -15,7 +15,6 @@
 
     using Microsoft.AspNet.Identity;
 
-
     [SessionAuthorize]
     [RoutePrefix("api")]
     public class EducationsController : BaseApiController
@@ -98,8 +97,6 @@
                                     "Bachelor's Degree ,";
                 return this.BadRequest(errorMessage);
             }
-
-            degree.Description = model.DegreeDescription ?? null;
             await this.Data.SaveChangesAsync();
             Education education = new Education()
             {

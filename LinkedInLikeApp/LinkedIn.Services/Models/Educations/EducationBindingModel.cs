@@ -6,8 +6,8 @@
     public class EducationBindingModel
     {
         [Required]
-        [MinLength(3)]
-        [MaxLength(10)]
+        [MinLength(2)]
+        [MaxLength(30)]
         public string Name { get; set; }
 
         public string Location { get; set; }
@@ -19,8 +19,6 @@
         public DateTime EndDate { get; set; }
 
         public string DegreeName { get; set; }
-
-        public string DegreeDescription { get; set; }
 
         [Required]
         public double Grade { get; set; }

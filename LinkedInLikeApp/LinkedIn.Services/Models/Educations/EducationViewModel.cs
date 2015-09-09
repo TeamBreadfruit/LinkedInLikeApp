@@ -18,8 +18,7 @@
                     Location = a.Location,
                     Degree = new DegreeViewModel()
                     {
-                        Name = a.Degree.Name,
-                        Description = a.Degree.Description
+                        Name = a.Degree.Name
                     },
                     Grade = a.Grade
                 };
