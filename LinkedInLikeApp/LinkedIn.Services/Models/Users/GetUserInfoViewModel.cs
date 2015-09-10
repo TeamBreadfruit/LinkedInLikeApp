@@ -30,6 +30,7 @@
                     }),
                     Educations = u.Educations.Select(e => new EducationViewModel
                     {
+                        Id = e.Id,
                         Name = e.Name,
                         Location = e.Location,
                         StartDate = e.StartDate,

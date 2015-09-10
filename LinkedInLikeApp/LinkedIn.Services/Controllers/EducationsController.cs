@@ -174,7 +174,7 @@
             result.Location = model.Location ?? result.Location;
 
             await this.Data.SaveChangesAsync();
-            return this.StatusCode(HttpStatusCode.NoContent);
+            return this.StatusCode(HttpStatusCode.OK);
         }
 
         [HttpDelete]
