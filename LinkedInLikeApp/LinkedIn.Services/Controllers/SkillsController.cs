@@ -110,7 +110,7 @@
             result.Description = model.Description ?? result.Description;
 
             await this.Data.SaveChangesAsync();
-            return this.StatusCode(HttpStatusCode.NoContent);
+            return this.StatusCode(HttpStatusCode.OK);
         }
 
         // POST: api/Skills
