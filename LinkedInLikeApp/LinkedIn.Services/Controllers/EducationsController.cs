@@ -5,7 +5,6 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Net;
-    using System.Text;
     using System.Threading.Tasks;
     using System.Web.Http;
 
@@ -75,28 +74,34 @@
             {
                 return this.BadRequest("Invalid session token.");
             }
+
             if (model == null)
             {
                 return this.BadRequest("Invalid input data");
             }
+
             if (!this.ModelState.IsValid)
             {
                 return this.BadRequest(this.ModelState);
             }
-            var degree = await this.Data.Degrees.All().FirstOrDefaultAsync(d => d.Name==model.DegreeName);
+
+            var degree = await this.Data.Degrees.All()
+                .FirstOrDefaultAsync(d => d.Name == model.DegreeName);
+
             if (degree == null)
             {
                 var errorMessage = "Invalid degree name.Posiible degree names: " +
                                     "Juris Doctor (J.D.) ," + "Doctor of Medicine (M.D.) ," +
                                     "Master's of Business Administration (M.B.A) ," +
-                                    "Engineer's Degree ,"+"High School"+
-                                    "Doctor of Philosophy (Ph.D.) ,"+
-                                    "Associate's Degree ,"+
+                                    "Engineer's Degree ," + "High School" +
+                                    "Doctor of Philosophy (Ph.D.) ," +
+                                    "Associate's Degree ," +
                                     "Master's Degree ," +
                                     "Bachelor's Degree ," +
                                     "Bachelor's Degree ,";
                 return this.BadRequest(errorMessage);
             }
+
             await this.Data.SaveChangesAsync();
             Education education = new Education()
             {
@@ -197,7 +202,7 @@
                 return this.Unauthorized();
             }
 
-            var educationToDelete = this.Data.Educations.All().FirstOrDefaultAsync(e => e.Id == id);
+            var educationToDelete = await this.Data.Educations.All().FirstOrDefaultAsync(e => e.Id == id);
 
             this.Data.Educations.Delete(educationToDelete);
             await this.Data.SaveChangesAsync();
