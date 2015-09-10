@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Linq.Dynamic;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using LinkedIn.Services.Models.Educations;
-using Microsoft.AspNet.Identity;
-
-namespace LinkedIn.Services.Controllers
+﻿namespace LinkedIn.Services.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Data.Entity;
+
+    using LinkedIn.Services.Models.Educations;
+
     [RoutePrefix("api")]
     public class DegreesController :BaseApiController
     {
@@ -18,13 +16,10 @@ namespace LinkedIn.Services.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAllDegrees()
         {
-
-            var degrees =await this.Data.Degrees.All().Select(d => new DegreeViewModelWithId
+            var degrees =await this.Data.Degrees.All().Select(d => new DegreeViewModel()
             {
-                Id = d.Id,
                 Name = d.Name
             }).ToListAsync();
-
             return this.Ok(degrees);
         }
     }
